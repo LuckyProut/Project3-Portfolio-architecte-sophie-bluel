@@ -1,4 +1,4 @@
-
+// fetch api work gallery
 
 fetch('http://localhost:5678/api/works/')
 .then(response => response.json())
@@ -20,3 +20,31 @@ function displayWorks(works) {
         workFigure.append(workImg, workTitle);
     });
 };
+
+
+// filters
+
+async function getCategories(){
+    const url = "http://localhost:5678/api/categories"
+    try {
+        const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error('Response status: ${response.status}');
+        }
+        
+        const json = await response.json();
+        console.log(json);
+        for (let i = 0; i < json.length; i++) {
+            setFilter(json[i]);
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+getCategories()
+
+function setFilter(data) {
+    const div = document.createElement("div");
+        div.InnerHTML = `${data.name}`;
+        document.querySelector(".divFilters").append(div);
+}

@@ -188,15 +188,4 @@ footer nav ul {
 
 /* Filtres */
 
-.filters {
-	font-family: 'Syne';
-	color: #1D6154;
-	padding: 30px;
-}
 
-.filters a {
-	border: 1px solid #1D6154;
-	border-radius: 60px;
-	padding: 10px;
-	margin: 10px;
-}
