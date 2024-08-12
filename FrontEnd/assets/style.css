@@ -188,4 +188,18 @@ footer nav ul {
 
 /* Filtres */
 
+.divFilters {
+	font-family: 'Syne';
+	color: #1D6154;
+	font-size: 16px;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	margin: 50px;
+}
 
+.divFilters > * {
+	padding: 10px;
+	border: solid 1px #1D6154;
+	border-radius: 30px;
+}

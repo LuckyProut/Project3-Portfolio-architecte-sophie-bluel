@@ -45,6 +45,13 @@ getCategories()
 
 function setFilter(data) {
     const div = document.createElement("div");
-        div.InnerHTML = `${data.name}`;
-        document.querySelector(".divFilters").append(div);
+    div.innerHTML = `${data.name}`;
+    document.querySelector(".divFilters").append(div);
 }
+
+// function setFilter(category) {
+//     const divFilters = document.querySelector('.divFilters');
+//     const filterElement = document.createElement('div');
+//     filterElement.textContent = category.name; // ou toute autre propriété que vous voulez afficher
+//     divFilters.appendChild(filterElement);
+// }
