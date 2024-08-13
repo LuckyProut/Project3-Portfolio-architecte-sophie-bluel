@@ -46,6 +46,10 @@ async function getWorks(filter) {
 }
 getWorks();
 
+//charger les oeuvres au lancement de la page
+document.addEventListener("DOMContentLoaded", () => {
+    getWorks(); 
+});
 
 // création de la gallerie
 
@@ -68,7 +72,7 @@ async function getCategories(){
         }
         const json = await response.json();
         for (let i = 0; i < json.length; i++) {
-            setFilter(json[i]);
+            Filter(json[i]);
         }
     } catch (error) {
         console.error(error.message);
@@ -79,7 +83,7 @@ getCategories()
 
 //mise en place des filtres
 
-function setFilter(data) {
+function Filter(data) {
     const div = document.createElement("div");
     div.className = `button${data.id}`
     div.addEventListener("click", () => getWorks(data.id));
