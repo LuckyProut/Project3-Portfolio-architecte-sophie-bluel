@@ -47,6 +47,7 @@ async function getWorks(filter) {
 getWorks();
 
 //charger les oeuvres au lancement de la page
+
 document.addEventListener("DOMContentLoaded", () => {
     getWorks(); 
 });

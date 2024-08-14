@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -163,6 +164,7 @@ margin: auto;
 }
 #contact label {
 	margin: 2em 0 1em 0;
+	color: #3D3D3D;
 }
 #contact textarea {
 	border: none;
@@ -183,7 +185,7 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
 /* Filtres */
@@ -208,4 +210,21 @@ footer nav ul {
 .divFilters > *:hover {
 	color: white;
 	background-color: #1D6154;
+}
+
+/* htmllogin */
+
+.htmllogin {
+	height: 1024px;
+}
+/* demander comment fixer la dimension d'une page */
+
+/* Login */
+
+.login {
+	margin-top: 200px;
+}
+
+#contact a {
+	color: #3D3D3D;
 }
