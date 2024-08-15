@@ -32,17 +32,17 @@ async function getWorks(filter) {
         }
         const json = await response.json();
         if(filter) {
+            // on défini un filtrer en fonction de la catégorie de l'id des oeuvres
+            // puis si filter est défini on vient afficher les éléments de la categoryId
             const filtered = json.filter((data) => data.categoryId === filter);
             for (let i = 0; i < filtered.length; i++) {
                 Gallery(filtered[i]);
             }
-            // on défini un filtrer en fonction de la catégorie de l'id des oeuvres
-            // puis si filter est défini on vient afficher les éléments de la categoryId
         } else {
+            // si aucun filtre appliqué (fonction getworks défini sur 0 plus bas) alors on affiche tout
             for (let i = 0; i < json.length; i++) {
                 Gallery(json[i]);
             }
-            // si aucun filtre appliqué (fonction getworks défini sur 0 plus bas) alors on affiche tout
         }
     } catch (error) {
         console.error(error.message);
@@ -76,11 +76,11 @@ async function getCategories(){
             throw new Error('Response status: ${response.status}');
         }
         const json = await response.json();
+        // boucle `for`qui parcourt le json pour définir des catégories
+        // on appelle la fonction Filter pour chaque catégorie
         for (let i = 0; i < json.length; i++) {
             Filter(json[i]);
         }
-        // boucle `for`qui parcourt le json pour définir des catégories
-        // on appelle la fonction Filter pour chaque catégorie
     } catch (error) {
         console.error(error.message);
     }
@@ -92,10 +92,10 @@ getCategories()
 
 function Filter(data) {
     const div = document.createElement("div");
-    div.className = `button${data.id}`
     // donner une classe à chaque bouton
-    div.addEventListener("click", () => getWorks(data.id));
+    div.className = `button${data.id}`;
     // `click`qui va appeler la fonction getWorks avec le data.id des filtres et trouver les oeuvres qui ont le même categoryId
+    div.addEventListener("click", () => getWorks(data.id));
     div.innerHTML = `${data.name}`;
     document.querySelector(".divFilters").append(div);
 }

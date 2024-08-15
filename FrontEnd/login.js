@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function submitLoginForm(event) {
     event.preventDefault();
-    let user = {
-      email: "sophie.bluel@test.tld",
-      password: "S0phie",
+    let userAdmin = {
+        email: document.getElementById("emailLogin"),
+        password: document.getElementById("passwordLogin"),
     };
   
     try {
@@ -18,16 +18,25 @@ async function submitLoginForm(event) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify({
+            email: userAdmin.email.value,
+            password: userAdmin.password.value,
+        })
       });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (response.ok) {
+        const data = await response.json();
+        // stockage du token dans le session storage
+        window.sessionStorage.setItem("tokenLogin", data.token);
+        // renvoie à la page d'accueil si connexion = ok
+        window.location.href = "index.html";
+      } else {
+        // créer une alerte ou insérer une div?
+        alert("E-mail ou mot de passe incorrecte")
       }
-      let result = await response.json();
-      console.log(result);
-    //   console.log("E-mail:", user.email)
-    //   console.log("MDP", user.password)
+        // ----du mal à comprendre pourquoi j'ai une erreur 405 si je retire cette partie
     } catch (error) {
         console.error(error.message);
     }
+        // ------ je suis pas sûr : demander si c'est obligatoire
+        //  oui c'est obligatoire fait parti d'un bloc `try......catch`
   }
