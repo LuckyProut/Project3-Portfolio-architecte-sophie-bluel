@@ -9,8 +9,9 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="login.js"></script>
 </head>
-<body class="bodylogin">
+<body>
 <header>
     <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
     <nav>
@@ -25,18 +26,18 @@
 <main>
     <section id="contact">
 		<h2 class="login">Log In</h2>
-		<form action="#" method="post">
+		<form id="formLogin" action="#" method="post">
 			<label for="email">E-mail</label>
-			<input type="email" name="email" id="email">
+			<input type="email" name="email" id="emailLogin">
 			<label for="password">Mot de passe</label>
-			<input type="password" name="password" id="password">
-			<input type="submit" value="Se connecter">
+			<input type="password" name="password" id="passwordLogin">
+			<input type="submit" value="Se connecter" id="submitLogin">
 		</form>
         <p><a href=#>Mot de passe oublié</a></p>
 	</section>
 </main>
 
-<footer class="footerlogin">
+<footer>
 	<nav>
 		<ul>
 			<li>Mentions Légales</li>
