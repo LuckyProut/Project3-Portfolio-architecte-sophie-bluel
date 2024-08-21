@@ -100,8 +100,21 @@ function Filter(data) {
     document.querySelector(".divFilters").append(div);
 }
 
+// `click` qui vient réinitialiser la gallerie avec getWorks(0)
 document.addEventListener("DOMContentLoaded", function() {
     const button0 = document.querySelector(".button0");
     button0.addEventListener("click", () => getWorks(0));
 });
-// `click` qui vient réinitialiser la gallerie avec getWorks(0)
+
+
+const token = sessionStorage.getItem('tokenLogin');
+
+document.addEventListener("DOMContentLoaded", function() {
+    if (token) {
+        document.querySelector(".divFilters").style.display = "none";
+        
+    } else {
+        document.querySelector(".editMode").style.display = "none";
+        document.querySelector(".modify").style.display = "none";
+    }
+});
