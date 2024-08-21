@@ -108,13 +108,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 const token = sessionStorage.getItem('tokenLogin');
-
 document.addEventListener("DOMContentLoaded", function() {
     if (token) {
         document.querySelector(".divFilters").style.display = "none";
-        
+        document.querySelector(".login").style.display = "none";
     } else {
         document.querySelector(".editMode").style.display = "none";
         document.querySelector(".modify").style.display = "none";
+        document.querySelector(".logout").style.display = "none";
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutButton = document.querySelector('.logout');
+    logoutButton.addEventListener('click', function() {
+        sessionStorage.clear();
+        location.reload();
+    });
+  });
+

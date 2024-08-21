@@ -244,6 +244,7 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
+	color: black;
 }
 
 .styleModal {
@@ -251,4 +252,14 @@ footer nav ul {
 	justify-content: center;
 	align-items: center;
 	gap: 50px;
+	margin-bottom: 40px;
+}
+
+.logout {
+	cursor: pointer;
+}
+
+.footerLogin li{
+	position: fixed;
+    bottom: 0;
 }
