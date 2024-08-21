@@ -127,3 +127,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+
+//   Modal
+
+document.addEventListener('DOMContentLoaded', function() {
+    const openModal = function (e) {
+        e.preventDefault();
+        const target = document.querySelector(e.target.getAttribute('href'));
+        target.style.display = null
+        modal.addEventListener('click', closeModal)
+        modal.querySelector('.modalExit').addEventListener('click', closeModal)
+        };
+    
+
+    const closeModal = function (e) {
+        if (modal === null) return 
+        e.preventDefault()
+        modal.style.display = 'none';
+        modal = target;
+        modal.removeEventListener('click', closeModal)
+        modal.querySelector('.modalExit').removeEventListener('click', closeModal)
+        modal = null
+    }
+
+    document.querySelectorAll('.modify').forEach(a => {
+        a.addEventListener('click', openModal);
+    });
+    document.addEventListener('click', outsideClickHandler);
+});
+
+

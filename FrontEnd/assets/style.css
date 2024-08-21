@@ -245,6 +245,7 @@ footer nav ul {
 	justify-content: center;
 	gap: 10px;
 	color: black;
+	cursor: pointer;
 }
 
 .styleModal {
@@ -262,4 +263,45 @@ footer nav ul {
 .footerLogin li{
 	position: fixed;
     bottom: 0;
+}
+
+/* modal */
+
+.modalGallery {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #0000004D;
+}
+
+.modalWrapper {
+	overflow: auto;
+	width: 630px;
+	height: 688px;
+	background-color: white;
+	border-radius: 10px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center; 
+}
+
+.modalExit {
+	position: absolute; 
+	top: 15px; 
+	right: 15px;
+	cursor: pointer;
+}
+
+.modalExit i{
+	font-size: 20px;
+}
+
+.modalTitle {
+	margin-top: 30px;
 }
