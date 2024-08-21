@@ -28,6 +28,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 	background-color: #FFFEF8;
@@ -292,6 +293,7 @@ footer nav ul {
 }
 
 .modalExit {
+	all: unset;
 	position: absolute; 
 	top: 15px; 
 	right: 15px;
@@ -321,4 +323,25 @@ footer nav ul {
 .modalGalleryContent img{
 	width: 76px;
 	height: 102px;
+}
+
+.addWorks {
+	width: 238px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Syne';
+	color: white;
+	background-color: #1D6154;
+	font-size: 14px;
+	border-radius: 30px;
+	cursor: pointer;
+	margin-top: 50px;
+}
+
+hr {
+	border: solid 1px #B3B3B3;
+	width: 65%;
+	margin-top: 100px;
 }

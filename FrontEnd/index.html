@@ -41,13 +41,13 @@
 		<div class="styleModal">
 		<h2>Mes Projets</h2> 
 		<a href="#modalModify" class="modify"><i class="fa-solid fa-pen-to-square"></i>modifier</a>
-		<aside id="modalModify" class="modalGallery" style="display: none;">
-			<div class="modalWrapper">
-				<div class="modalExit">
-					<i class="fa-solid fa-xmark"></i>
-				</div>
+		<aside id="modalModify" class="modalGallery" aria-hidden="true" role="dialog" aria-labelledby="modalTitle" style="display: none;">
+			<div class="modalWrapper stopPropagation">
+				<button class="modalExit"><i class="fa-solid fa-xmark"></i></button> 
 				<h3 class="modalTitle">Galerie Photo</h3>
 				<div class="modalGalleryContent"></div>
+				<hr />
+				<div class="addWorks">Ajouter une photo</div>
 			</div>
 		</aside>
 		</div>

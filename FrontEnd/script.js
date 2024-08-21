@@ -123,8 +123,12 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const target = document.querySelector(e.target.getAttribute('href'));
         target.style.display = null
+        target.removeAttribute('aria-hidden')
+        target.setAttribute('aria-modal', true)
+        modal = target
         modal.addEventListener('click', closeModal)
         modal.querySelector('.modalExit').addEventListener('click', closeModal)
+        modal.querySelector('.stopPropagation').addEventListener('click', stopPropagation)
         };
     
 
@@ -132,16 +136,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (modal === null) return 
         e.preventDefault()
         modal.style.display = 'none';
-        modal = target;
+        modal.setAttribute('aria-hidden', 'true')
+        modal.removeAttribute('aria-modal')
         modal.removeEventListener('click', closeModal)
         modal.querySelector('.modalExit').removeEventListener('click', closeModal)
+        modal.querySelector('.stopPropagation').removeEventListener('click', stopPropagation)
         modal = null
+    }
+
+    const stopPropagation = function (e) {
+        e.stopPropagation()
     }
 
     document.querySelectorAll('.modify').forEach(a => {
         a.addEventListener('click', openModal);
     });
-    document.addEventListener('click', outsideClickHandler);
+    
 });
 
 
