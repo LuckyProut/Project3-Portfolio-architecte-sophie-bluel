@@ -118,7 +118,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //   Modal
 
+// au clique sur "modifier", ouvre la 1ere modale
 document.addEventListener('DOMContentLoaded', function() {
+    
     const openModal = function (e) {
         e.preventDefault();
         const target = document.querySelector(e.target.getAttribute('href'));
@@ -132,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     
 
+    // au clique sur la croix, ferme la modale
     const closeModal = function (e) {
         if (modal === null) return 
         e.preventDefault()
@@ -147,6 +150,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const stopPropagation = function (e) {
         e.stopPropagation()
     }
+
+    const secondModal = document.querySelector('.addWorks');  //récupère le bouton "ajouter une photo"
+
+    secondModal.addEventListener('click', function() {  //au click sur "ajouter une photo"
+        document.getElementById("galleryContent").style.display = "none"; //cache le contenu de la première modale
+        document.getElementById("addWorksContent").style.display = "flex"; //affiche le contenu de la deuxieme modale
+    });
+
+    const modalBack = document.querySelector('.modalBack');
+    modalBack.addEventListener('click', function() {  //au click sur "ajouter une photo"
+        document.getElementById("galleryContent").style.display = "flex"; //affiche le contenu de la première modale
+        document.getElementById("addWorksContent").style.display = "none"; //cache le contenu de la deuxieme modale
+    });
+
 
     document.querySelectorAll('.modify').forEach(a => {
         a.addEventListener('click', openModal);
