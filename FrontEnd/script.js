@@ -48,7 +48,10 @@ function setGallery(data) {
 
 function setModalGallery(data) {
     const figure = document.createElement("figure");
-    figure.innerHTML = `<img src="${data.imageUrl}" alt="${data.title}">`;
+    figure.innerHTML = `<div class="imageContainer"> 
+    <img src="${data.imageUrl}" alt="${data.title}">
+    <i class="fa-solid fa-trash-can overlayTrash"></i>
+    </div>`;
     document.querySelector(".modalGalleryContent").append(figure); 
 }
 
@@ -155,20 +158,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     secondModal.addEventListener('click', function() {  //au click sur "ajouter une photo"
         document.getElementById("galleryContent").style.display = "none"; //cache le contenu de la première modale
-        document.getElementById("addWorksContent").style.display = "flex"; //affiche le contenu de la deuxieme modale
+        document.getElementById("addWorksContent").style.display = "block"; //affiche le contenu de la deuxieme modale
     });
 
     const modalBack = document.querySelector('.modalBack');
     modalBack.addEventListener('click', function() {  //au click sur "ajouter une photo"
-        document.getElementById("galleryContent").style.display = "flex"; //affiche le contenu de la première modale
+        document.getElementById("galleryContent").style.display = "block"; //affiche le contenu de la première modale
         document.getElementById("addWorksContent").style.display = "none"; //cache le contenu de la deuxieme modale
     });
-
 
     document.querySelectorAll('.modify').forEach(a => {
         a.addEventListener('click', openModal);
     });
     
+
+
+    // async function fetchCategories() {
+    //     try {
+    //         const response = await getCategories(); // Remplacez l'URL par celle de votre API
+    //         const categories = await response.json();
+
+    //         // Sélectionnez l'élément <select>
+    //         const selectElement = document.getElementById('categoriesList');
+
+    //         // Parcourez les catégories et ajoutez-les en tant qu'options
+    //         categories.forEach(category => {
+    //             const option = document.createElement('option');
+    //             option.value = category.id;  // Utilisez un identifiant unique pour la valeur
+    //             option.textContent = category.name; // Le texte à afficher dans le <select>
+    //         });
+    //     } catch (error) {
+    //         console.error('Erreur lors de la récupération des catégories:', error);
+    //     }
+    // }
+
+    // Appelez la fonction pour charger les catégories au chargement de la page
+    fetchCategories();
 });
 
 

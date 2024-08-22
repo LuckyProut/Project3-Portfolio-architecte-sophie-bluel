@@ -334,6 +334,31 @@ footer nav ul {
 	margin: auto;
 }
 
+.imageContainer {
+	position: relative;
+	display: inline-block;
+}
+
+.imageContainer img {
+	display: block;
+}
+
+.imageContainer .overlayTrash{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+	color: white;
+	background-color: black;
+	width: 20px;
+	height: 20px;
+	font-size: 11px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 2px;
+}
+
 .modalGalleryContent img{
 	width: 76px;
 	height: 102px;
@@ -347,6 +372,10 @@ footer nav ul {
 #addWorksContent {
 	display: flex;
 	flex-direction: column;
+}
+
+#addWorksContent .modalTitle{
+	text-align: center;
 }
 
 .addWorks {
@@ -368,4 +397,73 @@ hr {
 	border: solid 1px #B3B3B3;
 	width: 65%;
 	margin-top: 100px;
+}
+
+
+.formAddPhoto {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #E8F1F7;
+	width: 420px;
+	height: 169px;
+	border-radius: 10px;
+}
+  
+.formAddPhoto i {
+	color: #B9C5CC;
+	font-size: 68px;
+	font-weight: 100;
+	margin: 20px;
+	margin-top: -25px;
+}
+  
+.formAddPhoto input {
+	display: none;
+}
+  
+.formAddPhoto label {
+	font-family: "work sans";
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 173px;
+	height: 36px;
+	background-color: #CBD6DC;
+	color: #306685;
+	border-radius: 50px;
+	cursor: pointer;
+	margin-top: -10px;
+}
+
+.formAddPhoto::after {
+	content: "jpg, png : 4mo max";
+	position: absolute;
+	top: 240px;
+}
+
+.modalWrapper #contact{ 
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	width: 420px;
+}
+
+.modalWrapper #contact label{
+	display: flex;
+	align-items: start;
+}
+
+.modalWrapper #contact select{ 
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#addWorksContent hr{
+	border: solid 1px #B3B3B3;
+	width: 97.5%;
+	margin-top: 49px;
 }
