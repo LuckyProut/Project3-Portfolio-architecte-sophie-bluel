@@ -230,10 +230,17 @@ footer nav ul {
 	color: #3D3D3D;
 }
 
-.editMode {
+input#submitLogin {
+	cursor: pointer;
+}
+
+.editBackground {
 	background-color: black;
+}
+
+.editMode {
 	color: white;
-	width: 100%;
+	min-width: 100%;
 	height: 59px;
 	display: flex;
 	align-items: center;
@@ -264,6 +271,7 @@ footer nav ul {
 .footerLogin li{
 	position: fixed;
     bottom: 0;
+	cursor: pointer;
 }
 
 /* modal */
@@ -329,7 +337,7 @@ footer nav ul {
 	width: 65%;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	column-gap: 5px;
 	row-gap: 20px;
 	margin: auto;
 }
@@ -466,4 +474,12 @@ hr {
 	border: solid 1px #B3B3B3;
 	width: 97.5%;
 	margin-top: 49px;
+}
+
+#categoriesList {
+	text-align: start;
+}
+
+#textTitle {
+	text-align: start;
 }

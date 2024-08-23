@@ -25,11 +25,15 @@ async function getWorks(filter) {
                 setModalGallery(json[i]);
             }
         }
+        const trashCan = document.querySelectorAll(".overlayTrash");
+        console.log("trash")
+        trashCan.forEach((e) => e.addEventListener("click", (event) => deleteWorks(event)));
     } catch (error) {
         console.error(error.message);
     }
 }
 getWorks();
+
 
 //charger les oeuvres au lancement de la page
 
@@ -37,27 +41,31 @@ document.addEventListener("DOMContentLoaded", () => {
     getWorks(); 
 });
 
-// création de la gallerie
+
+// Création de la gallerie
 
 function setGallery(data) {
     const figure = document.createElement("figure");
+    figure.id = `${data.id}`; // ajout de l'id en fonction de l'id de l'élément
     figure.innerHTML = `<img src="${data.imageUrl}" alt="${data.title}">
     <figcaption>${data.title}</figcaption>`;
     document.querySelector(".gallery").append(figure);   
 }
 
+// Création de la gallerie dans la modale
+
 function setModalGallery(data) {
     const figure = document.createElement("figure");
+    figure.id = `${data.id}`; // ajout de l'id en fonction de l'id de l'élément
     figure.innerHTML = `<div class="imageContainer"> 
     <img src="${data.imageUrl}" alt="${data.title}">
-    <i class="fa-solid fa-trash-can overlayTrash"></i>
+    <i class="fa-solid fa-trash-can overlayTrash " id="${data.id}"></i>
     </div>`;
     document.querySelector(".modalGalleryContent").append(figure); 
 }
 
 
-
-// récupération des catégories 
+// Récupération des catégories 
 
 async function getCategories(){
     const url = "http://localhost:5678/api/categories"
@@ -79,24 +87,44 @@ async function getCategories(){
 getCategories()
 
 
-//mise en place des filtres
+//Mise en place des filtres via les ID
+
+let boutonActif = null
 
 function Filter(data) {
     const div = document.createElement("div");
-    // donner une classe à chaque bouton
     div.className = `button${data.id}`;
-    // `click`qui va appeler la fonction getWorks avec le data.id des filtres et trouver les oeuvres qui ont le même categoryId
-    div.addEventListener("click", () => getWorks(data.id));
     div.innerHTML = `${data.name}`;
+    div.addEventListener("click",function() {
+        if (boutonActif && boutonActif !== this) {
+            boutonActif.style.color = '#1D6154';
+            boutonActif.style.backgroundColor = 'transparent' 
+        }
+        this.style.color = 'white';
+        this.style.backgroundColor = '#1D6154';
+        boutonActif = this;
+        getWorks(data.id);
+       
+    });
     document.querySelector(".divFilters").append(div);
 }
 
-// `click` qui vient réinitialiser la gallerie avec getWorks(0)
 document.addEventListener("DOMContentLoaded", function() {
     const button0 = document.querySelector(".button0");
-    button0.addEventListener("click", () => getWorks(0));
+    button0.addEventListener("click",function() {
+        if (boutonActif && boutonActif !== this) {
+            boutonActif.style.color = '#1D6154';
+            boutonActif.style.backgroundColor = 'transparent' 
+        }
+        this.style.color = 'white';
+        this.style.backgroundColor = '#1D6154';
+        boutonActif = this;
+        getWorks(0);
+    });
 });
 
+
+// Stockage du Token
 
 const token = sessionStorage.getItem('tokenLogin');
 document.addEventListener("DOMContentLoaded", function() {
@@ -110,13 +138,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+
+// Déconnection -> clear du Token + reload page
+
 document.addEventListener('DOMContentLoaded', function() {
     const logoutButton = document.querySelector('.logout');
     logoutButton.addEventListener('click', function() {
         sessionStorage.clear();
         location.reload();
     });
-  });
+});
 
 
 //   Modal
@@ -134,8 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.addEventListener('click', closeModal)
         modal.querySelector('.modalExit').addEventListener('click', closeModal)
         modal.querySelector('.stopPropagation').addEventListener('click', stopPropagation)
-        };
-    
+    };
 
     // au clique sur la croix, ferme la modale
     const closeModal = function (e) {
@@ -148,11 +178,11 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.querySelector('.modalExit').removeEventListener('click', closeModal)
         modal.querySelector('.stopPropagation').removeEventListener('click', stopPropagation)
         modal = null
-    }
+    };
 
     const stopPropagation = function (e) {
         e.stopPropagation()
-    }
+    };
 
     const secondModal = document.querySelector('.addWorks');  //récupère le bouton "ajouter une photo"
 
@@ -170,30 +200,54 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.modify').forEach(a => {
         a.addEventListener('click', openModal);
     });
-    
+ 
+});
 
 
-    // async function fetchCategories() {
-    //     try {
-    //         const response = await getCategories(); // Remplacez l'URL par celle de votre API
-    //         const categories = await response.json();
+// Affichage catégories dans la modale
 
-    //         // Sélectionnez l'élément <select>
-    //         const selectElement = document.getElementById('categoriesList');
+document.addEventListener('DOMContentLoaded', () => {
+    async function fetchCategories() {
+        try {
+            const response = await fetch('http://localhost:5678/api/categories');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const categories = await response.json();
+            console.log(categories);
+            
+            const selectElement = document.getElementById('categoriesList');
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                selectElement.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Erreur lors de la récupération des catégories:', error);
+        }
+    }
 
-    //         // Parcourez les catégories et ajoutez-les en tant qu'options
-    //         categories.forEach(category => {
-    //             const option = document.createElement('option');
-    //             option.value = category.id;  // Utilisez un identifiant unique pour la valeur
-    //             option.textContent = category.name; // Le texte à afficher dans le <select>
-    //         });
-    //     } catch (error) {
-    //         console.error('Erreur lors de la récupération des catégories:', error);
-    //     }
-    // }
-
-    // Appelez la fonction pour charger les catégories au chargement de la page
     fetchCategories();
 });
 
 
+// Suppression des travaux dans l'API
+
+async function deleteWorks(event) {
+    event.stopPropagation();
+    const id = event.srcElement.id;
+    const deleteAPI = "http://localhost:5678/api/works/"
+    const token = sessionStorage.getItem('tokenLogin');
+    let response = await fetch(deleteAPI + id, {
+        method: "DELETE",
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+    });
+    if (response.status == 401 || response.status == 500) {
+        alert = "Il y a eu une erreur";
+      } else {
+        location.reload();
+      }
+    }
