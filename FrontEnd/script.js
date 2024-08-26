@@ -67,6 +67,7 @@ function setModalGallery(data) {
 
 // Récupération des catégories 
 
+
 async function getCategories(){
     const url = "http://localhost:5678/api/categories"
     try {
@@ -84,8 +85,10 @@ async function getCategories(){
         console.error(error.message);
     }
 }
-getCategories()
 
+document.addEventListener("DOMContentLoaded", () => {
+    getCategories(); 
+});
 
 //Mise en place des filtres via les ID
 
@@ -111,6 +114,11 @@ function Filter(data) {
 
 document.addEventListener("DOMContentLoaded", function() {
     const button0 = document.querySelector(".button0");
+
+    button0.style.color = 'white';
+    button0.style.backgroundColor = '#1D6154';
+    boutonActif = button0;
+    
     button0.addEventListener("click",function() {
         if (boutonActif && boutonActif !== this) {
             boutonActif.style.color = '#1D6154';
@@ -248,6 +256,7 @@ async function deleteWorks(event) {
     if (response.status == 401 || response.status == 500) {
         alert = "Il y a eu une erreur";
       } else {
-        location.reload();
+        setGallery.reload();
+        setModalGallery.reload();
       }
     }

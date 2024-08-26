@@ -50,7 +50,7 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
+	max-width: 1440px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
@@ -128,7 +128,9 @@ li:hover {
 	margin-bottom: 1em;
 } */
 .gallery {
-	width: 100%;
+	max-width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
@@ -234,8 +236,10 @@ input#submitLogin {
 	cursor: pointer;
 }
 
-.editBackground {
-	background-color: black;
+.editWidth {
+	max-width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .editMode {
@@ -246,6 +250,7 @@ input#submitLogin {
 	align-items: center;
 	justify-content: center;
 	gap: 10px;
+	background-color: black;
 }
 
 .modify {

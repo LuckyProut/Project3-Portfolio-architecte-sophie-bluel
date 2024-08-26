@@ -33,10 +33,8 @@ async function submitLoginForm(event) {
         // créer une alerte ou insérer une div?
         alert("E-mail ou mot de passe incorrecte")
       }
-        // ----du mal à comprendre pourquoi j'ai une erreur 405 si je retire cette partie
     } catch (error) {
         console.error(error.message);
     }
-        // ------ je suis pas sûr : demander si c'est obligatoire
-        //  oui c'est obligatoire fait parti d'un bloc `try......catch`
+
   }
