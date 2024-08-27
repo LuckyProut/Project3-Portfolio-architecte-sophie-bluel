@@ -257,8 +257,7 @@ async function deleteWorks(event) {
     if (response.status == 401 || response.status == 500) {
         alert = "Il y a eu une erreur";
       } else {
-        setGallery.reload();
-        setModalGallery.reload();
+        window.location.reload();
       }
     }
 
@@ -266,24 +265,63 @@ async function deleteWorks(event) {
     // Ajout de travaux dans la modale
 
         // prévisualisation de l'image
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById('photo').addEventListener('change', function(event) {
-            const previewImage = document.getElementById('previewImage');
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block';
-                noPreview.style.display = 'none';
-            };
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.style.display = 'none';
-                previewImage.src = '';
-            }
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('photo').addEventListener('change', function(event) {
+                const previewImage = document.getElementById('previewImage');
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    document.getElementById('noPreview').style.display = 'none';
+                };
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    previewImage.style.display = 'none';
+                    previewImage.src = '';
+                }
+            });
         });
-    });
-    
+        
+        // Envoie du form vers l'api
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('validateButton')?.addEventListener('click', submitForm);
+        });
+        
+        function submitForm() {
+            const photoInput = document.getElementById('photo');
+            const titleInput = document.getElementById('textTitle');
+            const categoryInput = document.getElementById('categoriesList');
+        
+            const formData = new FormData();
+            formData.append('image', photoInput.files[0]);
+            formData.append('title', titleInput.value);
+            formData.append('category', categoryInput.value);
+        
+            const token = sessionStorage.getItem('tokenLogin');
+        
+            fetch('http://localhost:5678/api/works', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'accept': 'application/json',
+                },
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erreur lors de l'envoi du formulaire: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Succès:', data);
+                window.location.reload();
 
-    
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        }
+        
