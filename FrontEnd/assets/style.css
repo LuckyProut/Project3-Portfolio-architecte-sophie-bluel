@@ -215,12 +215,7 @@ footer nav ul {
 	background-color: #1D6154;
 }
 
-/* htmllogin */
 
-.htmllogin {
-	height: 1024px;
-}
-/* demander comment fixer la dimension d'une page */
 
 /* Login */
 
@@ -430,6 +425,8 @@ hr {
 	font-weight: 100;
 	margin: 20px;
 	margin-top: -25px;
+	display: flex;
+	justify-content: center;
 }
   
 .formAddPhoto input {
@@ -450,10 +447,10 @@ hr {
 	margin-top: -10px;
 }
 
-.formAddPhoto::after {
-	content: "jpg, png : 4mo max";
-	position: absolute;
-	top: 240px;
+.formAddPhotoInfo {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
 }
 
 .modalWrapper #contact{ 

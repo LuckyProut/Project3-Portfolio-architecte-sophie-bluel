@@ -60,9 +60,13 @@
 						<button class="modalBack"><i class="fa-solid fa-arrow-left"></i></button>
 						<h3 class="modalTitle">Ajout photo</h3>
 						<div class="formAddPhoto">
-							<i class="fa-regular fa-image"></i>
+							<div id="noPreview">
+							<i class="fa-regular fa-image iconeImage"></i>
 							<label for="photo">+ Ajouter une photo</label>
-							<input type="file" name="photo" id="photo" class="js-image">
+							<input type="file" name="photo" id="photo" class="addImage">
+							<div class="formAddPhotoInfo">jpg, png : 4mo max</div>
+							</div>
+							<img id="previewImage" src="" alt="Prévisualisation" style="display:none; width: 100px; height: auto;">
 						</div>
 					<section id="contact">
 						<label for="title">Titre</label>

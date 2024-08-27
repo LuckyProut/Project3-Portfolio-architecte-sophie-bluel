@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.querySelector('.stopPropagation').removeEventListener('click', stopPropagation)
         modal = null
     };
+    
 
     const stopPropagation = function (e) {
         e.stopPropagation()
@@ -260,3 +261,29 @@ async function deleteWorks(event) {
         setModalGallery.reload();
       }
     }
+
+
+    // Ajout de travaux dans la modale
+
+        // prévisualisation de l'image
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('photo').addEventListener('change', function(event) {
+            const previewImage = document.getElementById('previewImage');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+                noPreview.style.display = 'none';
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.style.display = 'none';
+                previewImage.src = '';
+            }
+        });
+    });
+    
+
+    
