@@ -276,9 +276,15 @@ input#submitLogin {
 	cursor: pointer;
 }
 
-.footerLogin li{
+.footerLogin{
+	background-color: white;
 	position: fixed;
     bottom: 0;
+	width: 1440px;
+	height: 60px;
+}
+
+.footerLogin li{
 	cursor: pointer;
 	margin-bottom: 2em;
 }
@@ -394,6 +400,24 @@ input#submitLogin {
 
 #addWorksContent .modalTitle{
 	text-align: center;
+}
+
+#validateButton {
+	width: 238px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Syne';
+	color: white;
+	background-color: gray;
+	font-size: 14px;
+	border-radius: 30px;
+	cursor: pointer;
+	margin: 50px auto auto auto;
+}
+#validateButton.active {
+	background-color: #1D6154;
 }
 
 .addWorks {

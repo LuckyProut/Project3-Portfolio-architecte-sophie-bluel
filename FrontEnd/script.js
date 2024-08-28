@@ -24,6 +24,7 @@ async function getWorks(filter) {
         } else {
             // si aucun filtre appliqué (fonction getworks défini sur 0 plus bas) alors on affiche tout
             if (json.length === 0) {
+                showNoWorksMessage();
             } else {
                 
                 for (let i = 0; i < json.length; i++) {
@@ -40,7 +41,6 @@ async function getWorks(filter) {
         console.error(error.message);
     }
 }
-
 
 // Fonction pour afficher un message lorsqu'aucun travail n'est trouvé
 function showNoWorksMessage() {
@@ -61,16 +61,12 @@ function hideNoWorksMessage() {
     }
 }
 
-
 //charger les oeuvres au lancement de la page
-
 document.addEventListener("DOMContentLoaded", () => {
     getWorks(); 
 });
 
-
 // Création de la gallerie
-
 function setGallery(data) {
     const figure = document.createElement("figure");
     figure.id = `${data.id}`; // ajout de l'id en fonction de l'id de l'élément
@@ -80,7 +76,6 @@ function setGallery(data) {
 }
 
 // Création de la gallerie dans la modale
-
 function setModalGallery(data) {
     const figure = document.createElement("figure");
     figure.id = `${data.id}`; // ajout de l'id en fonction de l'id de l'élément
@@ -91,10 +86,7 @@ function setModalGallery(data) {
     document.querySelector(".modalGalleryContent").append(figure); 
 }
 
-
 // Récupération des catégories 
-
-
 async function getCategories(){
     const url = "http://localhost:5678/api/categories"
     try {
@@ -157,9 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
 // Stockage du Token
-
 const token = sessionStorage.getItem('tokenLogin');
 document.addEventListener("DOMContentLoaded", function() {
     if (token) {
@@ -172,9 +162,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
 // Déconnection -> clear du Token + reload page
-
 document.addEventListener('DOMContentLoaded', function() {
     const logoutButton = document.querySelector('.logout');
     logoutButton.addEventListener('click', function() {
@@ -183,9 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
 //   Modal
-
 // au clique sur "modifier", ouvre la 1ere modale
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -246,9 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
  
 });
 
-
 // Affichage catégories dans la modale
-
 document.addEventListener('DOMContentLoaded', () => {
     async function fetchCategories() {
         try {
@@ -274,9 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchCategories();
 });
 
-
 // Suppression des travaux dans l'API
-
 async function deleteWorks(event) {
     event.stopPropagation();
     const id = event.srcElement.id;
@@ -296,13 +278,11 @@ async function deleteWorks(event) {
         document.getElementById(`${id}`).remove();
         const escapedId = CSS.escape(id);
         document.querySelector(`figure#${escapedId}`).remove();
-        
       }
+      showNoWorksMessage();
     }
 
-
     // Ajout de travaux dans la modale
-
         // prévisualisation de l'image
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('photo').addEventListener('change', function(event) {
@@ -339,7 +319,24 @@ async function deleteWorks(event) {
         // Envoie du form vers l'api
         document.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById('validateButton')?.addEventListener('click', submitForm);
-        });
+
+        function colourButton() {
+            const textTitle = document.getElementById('textTitle').value.trim();
+            const categoriesList = document.getElementById('categoriesList').value;
+            const photo = document.getElementById('photo').files.length > 0;
+    
+                // Changer la couleur du bouton en fonction des champs
+            const validateButton = document.getElementById('validateButton');
+            if (textTitle && categoriesList && photo) {
+                validateButton.classList.add('active');
+            } else {
+                validateButton.classList.remove('active');
+            }
+        }
+
+        document.getElementById('textTitle').addEventListener('input', colourButton);
+        document.getElementById('photo').addEventListener('change', colourButton);
+    });
         
         function submitForm() {
 
@@ -372,14 +369,16 @@ async function deleteWorks(event) {
                 console.log('Succès:', data);
                 setGallery(data);
                 setModalGallery(data);
+                hideNoWorksMessage();
                 photoInput.value = '';
                 titleInput.value = ''; 
                 previewImage.style.display = 'none';
+                removePreview.style.display = 'none';
                 document.getElementById('noPreview').style.display = 'block';
+                validateButton.classList.remove('active')
             })
             .catch(error => {
                 console.error('Erreur:', error);
                 alert("Formulaire incomplet/incorrect")
             });
         }
-        
