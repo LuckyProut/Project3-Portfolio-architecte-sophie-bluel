@@ -1,5 +1,4 @@
 // récupération des travaux
-console.warn("poiloku");
 async function getWorks(filter) {
     document.querySelector(".gallery").innerHTML = "";
     // sans ça chaque appel à getworks va ajouter de nouvelles images à celle déjà présente et non réinitialiser
@@ -14,17 +13,26 @@ async function getWorks(filter) {
             // on défini un filtrer en fonction de la catégorie de l'id des oeuvres
             // puis si filter est défini on vient afficher les éléments de la categoryId
             const filtered = json.filter((data) => data.categoryId === filter);
-            for (let i = 0; i < filtered.length; i++) {
-                setGallery(filtered[i]);
-                setModalGallery(filtered[i]);
+            if (filtered.length === 0) {
+                showNoWorksMessage(); // Affiche le message s'il n'y a pas de travaux pour le filtre donné
+            } else {
+                hideNoWorksMessage(); // Cache le message s'il y a des travaux
+                for (let i = 0; i < filtered.length; i++) {
+                    setGallery(filtered[i]);
+                }
             }
         } else {
             // si aucun filtre appliqué (fonction getworks défini sur 0 plus bas) alors on affiche tout
-            for (let i = 0; i < json.length; i++) {
-                setGallery(json[i]);
-                setModalGallery(json[i]);
+            if (json.length === 0) {
+            } else {
+                
+                for (let i = 0; i < json.length; i++) {
+                    setGallery(json[i]);
+                    setModalGallery(json[i]);
+                }
             }
         }
+        
         const trashCan = document.querySelectorAll(".overlayTrash");
         console.log("trash")
         trashCan.forEach((e) => e.addEventListener("click", (event) => deleteWorks(event)));
@@ -32,7 +40,26 @@ async function getWorks(filter) {
         console.error(error.message);
     }
 }
-getWorks();
+
+
+// Fonction pour afficher un message lorsqu'aucun travail n'est trouvé
+function showNoWorksMessage() {
+    let message = document.querySelector(".noWorks");
+    if (!message) {
+        message = document.createElement("div");
+        message.className = "noWorks";
+        message.textContent = "Aucune photo dans cette catégorie...";
+        document.querySelector(".gallery").append(message);
+    }
+}
+
+// Fonction pour cacher le message lorsqu'il y a des travaux
+function hideNoWorksMessage() {
+    const message = document.querySelector(".noWorks");
+    if (message) { 
+        message.remove();
+    }
+}
 
 
 //charger les oeuvres au lancement de la page
@@ -90,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
     getCategories(); 
 });
 
-//Mise en place des filtres via les ID
 
 let boutonActif = null
 
@@ -205,9 +231,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const modalBack = document.querySelector('.modalBack');
-    modalBack.addEventListener('click', function() {  //au click sur "ajouter une photo"
+    modalBack.addEventListener('click', function() {  //au click sur "retour"
         document.getElementById("galleryContent").style.display = "block"; //affiche le contenu de la première modale
         document.getElementById("addWorksContent").style.display = "none"; //cache le contenu de la deuxieme modale
+        document.getElementById("previewImage").style.display = "none"; // Cache l'image
+        document.getElementById("previewImage").src = ""; // Réinitialise la source de l'image
+        document.getElementById("removePreview").style.display = "none"; // Cache l'icône de suppression
+        document.getElementById("noPreview").style.display = "block"; // Réaffiche le formulaire initial
     });
 
     document.querySelectorAll('.modify').forEach(a => {
@@ -277,11 +307,13 @@ async function deleteWorks(event) {
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('photo').addEventListener('change', function(event) {
                 const previewImage = document.getElementById('previewImage');
+                const removePreview = document.getElementById("removePreview");
                 const file = event.target.files[0];
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     previewImage.src = e.target.result;
                     previewImage.style.display = 'block';
+                    removePreview.style.display = "block";
                     document.getElementById('noPreview').style.display = 'none';
                 };
                 if (file) {
@@ -289,9 +321,20 @@ async function deleteWorks(event) {
                 } else {
                     previewImage.style.display = 'none';
                     previewImage.src = '';
+                    removePreview.style.display = "none";
                 }
             });
         });
+
+        // retirer la photo pour en mettre une autre
+        document.addEventListener('DOMContentLoaded', (event) => {    
+    document.getElementById("removePreview").addEventListener("click", function () {
+    document.getElementById("previewImage").style.display = "none"; // Cache l'image
+    document.getElementById("previewImage").src = ""; // Réinitialise la source de l'image
+    document.getElementById("removePreview").style.display = "none"; // Cache l'icône de suppression
+    document.getElementById("noPreview").style.display = "block"; // Réaffiche le formulaire initial
+  });
+});
         
         // Envoie du form vers l'api
         document.addEventListener('DOMContentLoaded', (event) => {
