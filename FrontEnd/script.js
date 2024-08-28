@@ -1,5 +1,5 @@
 // récupération des travaux
-
+console.warn("poiloku");
 async function getWorks(filter) {
     document.querySelector(".gallery").innerHTML = "";
     // sans ça chaque appel à getworks va ajouter de nouvelles images à celle déjà présente et non réinitialiser
@@ -186,6 +186,10 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.querySelector('.modalExit').removeEventListener('click', closeModal)
         modal.querySelector('.stopPropagation').removeEventListener('click', stopPropagation)
         modal = null
+        document.getElementById("galleryContent").style.display = "block";
+        document.getElementById("addWorksContent").style.display = "none";
+        previewImage.style.display = 'none';
+        document.getElementById('noPreview').style.display = 'block';
     };
     
 
@@ -246,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function deleteWorks(event) {
     event.stopPropagation();
     const id = event.srcElement.id;
+    // const listItem = event.target.closest('div');
     const deleteAPI = "http://localhost:5678/api/works/"
     const token = sessionStorage.getItem('tokenLogin');
     let response = await fetch(deleteAPI + id, {
@@ -254,10 +259,14 @@ async function deleteWorks(event) {
             Authorization: "Bearer " + token,
         },
     });
+    
     if (response.status == 401 || response.status == 500) {
-        alert = "Il y a eu une erreur";
+        alert("Il y a eu une erreur");
       } else {
-        window.location.reload();
+        document.getElementById(`${id}`).remove();
+        const escapedId = CSS.escape(id);
+        document.querySelector(`figure#${escapedId}`).remove();
+        
       }
     }
 
@@ -290,6 +299,7 @@ async function deleteWorks(event) {
         });
         
         function submitForm() {
+
             const photoInput = document.getElementById('photo');
             const titleInput = document.getElementById('textTitle');
             const categoryInput = document.getElementById('categoriesList');
@@ -317,11 +327,16 @@ async function deleteWorks(event) {
             })
             .then(data => {
                 console.log('Succès:', data);
-                window.location.reload();
-
+                setGallery(data);
+                setModalGallery(data);
+                photoInput.value = '';
+                titleInput.value = ''; 
+                previewImage.style.display = 'none';
+                document.getElementById('noPreview').style.display = 'block';
             })
             .catch(error => {
                 console.error('Erreur:', error);
+                alert("Formulaire incomplet/incorrect")
             });
         }
         

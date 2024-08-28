@@ -135,15 +135,21 @@ li:hover {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+	margin-bottom: 50px;
 }
 
 .gallery img {
-	width: 100%;
+	max-width: 366px;
+	min-width: 366px;
+	max-height: 480px;
+	min-height: 480px;
+	object-fit: contain;
+	/* ou cover à voir */
 
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -370,6 +376,7 @@ input#submitLogin {
 .modalGalleryContent img{
 	width: 76px;
 	height: 102px;
+	object-fit: cover;
 }
 
 #galleryContent {
@@ -485,3 +492,15 @@ hr {
 #textTitle {
 	text-align: start;
 }
+
+/* #errorMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	min-height: 20px;
+	background-color: red;
+	color: white;
+	margin-bottom: 5px;
+	display: none;
+} */
