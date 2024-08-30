@@ -22,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	font-family: 'Work Sans';
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -155,8 +156,8 @@ li:hover {
 }
 #contact > * {
 	text-align: center;
-
 }
+
 #contact h2{
 	margin-bottom: 20px;
 }
@@ -176,6 +177,7 @@ li:hover {
 #contact label {
 	margin: 2em 0 1em 0;
 	color: #3D3D3D;
+	font-weight: 600;
 }
 #contact textarea {
 	border: none;
@@ -514,6 +516,7 @@ hr {
 
 #categoriesList {
 	text-align: start;
+	font-family: 'Work Sans';
 }
 
 #textTitle {
