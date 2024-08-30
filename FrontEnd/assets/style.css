@@ -541,23 +541,6 @@ right: -35px;
 	display: inline-block;
 }
 
-
-
-/* .imageContainer .overlayTrash{
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	cursor: pointer;
-	color: white;
-	background-color: black;
-	width: 20px;
-	height: 20px;
-	font-size: 11px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 2px; */
-/* } */
 /* #errorMessage {
 	display: flex;
 	justify-content: center;
