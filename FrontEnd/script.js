@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Création de la gallerie
 function setGallery(data) {
     const figure = document.createElement("figure");
-    figure.id = `${data.id}`; // ajout de l'id en fonction de l'id de l'élément
+    figure.id = `figure${data.id}`; // ajout de l'id en fonction de l'id de l'élément
     figure.innerHTML = `<img src="${data.imageUrl}" alt="${data.title}">
     <figcaption>${data.title}</figcaption>`;
     document.querySelector(".gallery").append(figure);   
@@ -76,11 +76,11 @@ function setGallery(data) {
 
 // Création de la gallerie dans la modale
 function setModalGallery(data) {
-    const figure = document.createElement("figure");
-    figure.id = `${data.id}`;
+    const figure = document.createElement("figureModal");
+    figure.id = `figureModal${data.id}`;
     figure.innerHTML = `<div class="imageContainer"> 
     <img src="${data.imageUrl}" alt="${data.title}">
-    <i class="fa-solid fa-trash-can overlayTrash " id="${data.id}"></i>
+    <i class="fa-solid fa-trash-can overlayTrash " id="trash${data.id}"></i>
     </div>`;
     document.querySelector(".modalGalleryContent").append(figure); 
 }
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Suppression des travaux dans l'API
 async function deleteWorks(event) {
     event.stopPropagation();
-    const id = event.srcElement.id;
+    const id = event.srcElement.id.replace("trash", ""); 
     const deleteAPI = "http://localhost:5678/api/works/"
     const token = sessionStorage.getItem('tokenLogin');
     let response = await fetch(deleteAPI + id, {
@@ -266,9 +266,10 @@ async function deleteWorks(event) {
     if (response.status == 401 || response.status == 500) {
         alert("Il y a eu une erreur");
       } else {
-        document.getElementById(`${id}`).remove();
-        const escapedId = CSS.escape(id);
-        document.querySelector(`figure#${escapedId}`).remove();
+        document.getElementById(`trash${id}`).remove();
+        document.getElementById(`figure${id}`).remove();
+        document.getElementById(`figureModal${id}`).remove();
+        showNoWorksMessage();
       }
     }
 
