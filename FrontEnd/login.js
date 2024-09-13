@@ -11,7 +11,6 @@ async function submitLoginForm(event) {
         email: document.getElementById("emailLogin"),
         password: document.getElementById("passwordLogin"),
     };
-  
     try {
       let response = await fetch(loginApi, {
         method: "POST",
@@ -25,16 +24,12 @@ async function submitLoginForm(event) {
       });
       if (response.ok) {
         const data = await response.json();
-        // stockage du token dans le session storage
         window.sessionStorage.setItem("tokenLogin", data.token);
-        // renvoie à la page d'accueil si connexion = ok
         window.location.href = "index.html";
       } else {
-        // créer une alerte ou insérer une div?
         alert("E-mail ou mot de passe incorrecte")
       }
     } catch (error) {
         console.error(error.message);
     }
-
   }

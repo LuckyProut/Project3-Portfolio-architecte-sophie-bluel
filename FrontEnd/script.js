@@ -35,7 +35,6 @@ async function getWorks(filter) {
         }
         
         const trashCan = document.querySelectorAll(".overlayTrash");
-
         trashCan.forEach((e) => e.addEventListener("click", (event) => deleteWorks(event)));
     } catch (error) {
         console.error(error.message);
@@ -78,7 +77,7 @@ function setGallery(data) {
 // Création de la gallerie dans la modale
 function setModalGallery(data) {
     const figure = document.createElement("figure");
-    figure.id = `${data.id}`; // ajout de l'id en fonction de l'id de l'élément
+    figure.id = `${data.id}`;
     figure.innerHTML = `<div class="imageContainer"> 
     <img src="${data.imageUrl}" alt="${data.title}">
     <i class="fa-solid fa-trash-can overlayTrash " id="${data.id}"></i>
@@ -95,8 +94,6 @@ async function getCategories(){
             throw new Error('Response status: ${response.status}');
         }
         const json = await response.json();
-        // boucle `for`qui parcourt le json pour définir des catégories
-        // on appelle la fonction Filter pour chaque catégorie
         for (let i = 0; i < json.length; i++) {
             Filter(json[i]);
         }
@@ -114,6 +111,7 @@ function Filter(data) {
     const div = document.createElement("div");
     div.className = `button${data.id}`;
     div.innerHTML = `${data.name}`;
+    document.querySelector(".divFilters").append(div);
     div.addEventListener("click",function() {
         if (boutonActif && boutonActif !== this) {
             boutonActif.style.color = '#1D6154';
@@ -122,10 +120,8 @@ function Filter(data) {
         this.style.color = 'white';
         this.style.backgroundColor = '#1D6154';
         boutonActif = this;
-        getWorks(data.id);
-       
+        getWorks(data.id);   
     });
-    document.querySelector(".divFilters").append(div);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -198,11 +194,11 @@ document.addEventListener('DOMContentLoaded', function() {
         modal = null
         document.getElementById("galleryContent").style.display = "block";
         document.getElementById("addWorksContent").style.display = "none";
-        previewImage.style.display = 'none';
         document.getElementById('noPreview').style.display = 'block';
         document.getElementById("previewImage").style.display = "none"; // Cache l'image
         document.getElementById("previewImage").src = ""; // Réinitialise la source de l'image
         document.getElementById("removePreview").style.display = "none"; // Cache l'icône de suppression
+        document.getElementById("textTitle").value = "";
     };
     
 
@@ -210,11 +206,10 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation()
     };
 
-    const secondModal = document.querySelector('.addWorks');  //récupère le bouton "ajouter une photo"
-
-    secondModal.addEventListener('click', function() {  //au click sur "ajouter une photo"
-        document.getElementById("galleryContent").style.display = "none"; //cache le contenu de la première modale
-        document.getElementById("addWorksContent").style.display = "block"; //affiche le contenu de la deuxieme modale
+    const secondModal = document.querySelector('.addWorks');
+    secondModal.addEventListener('click', function() {  
+        document.getElementById("galleryContent").style.display = "none"; 
+        document.getElementById("addWorksContent").style.display = "block"; 
     });
 
     const modalBack = document.querySelector('.modalBack');
@@ -260,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
 async function deleteWorks(event) {
     event.stopPropagation();
     const id = event.srcElement.id;
-    // const listItem = event.target.closest('div');
     const deleteAPI = "http://localhost:5678/api/works/"
     const token = sessionStorage.getItem('tokenLogin');
     let response = await fetch(deleteAPI + id, {
@@ -276,7 +270,6 @@ async function deleteWorks(event) {
         const escapedId = CSS.escape(id);
         document.querySelector(`figure#${escapedId}`).remove();
       }
-      showNoWorksMessage();
     }
 
 // Ajout de travaux dans la modale
@@ -322,15 +315,14 @@ function colourButton() {
     const categoriesList = document.getElementById('categoriesList').value;
     const photo = document.getElementById('photo').files.length > 0;
     
-    // Changer la couleur du bouton en fonction des champs
-    const validateButton = document.getElementById('validateButton');
+// Changer la couleur du bouton en fonction des champs
+const validateButton = document.getElementById('validateButton');
     if (textTitle && categoriesList && photo) {
         validateButton.classList.add('active');
     } else {
         validateButton.classList.remove('active');
     }
 }
-
     document.getElementById('textTitle').addEventListener('input', colourButton);
     document.getElementById('photo').addEventListener('change', colourButton);
 });
