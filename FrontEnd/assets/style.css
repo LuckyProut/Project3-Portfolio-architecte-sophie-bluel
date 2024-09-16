@@ -124,10 +124,7 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-/* #portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
-} */
+
 .gallery {
 	max-width: 1140px;
 	margin-left: auto;
@@ -145,8 +142,6 @@ li:hover {
 	max-height: 480px;
 	min-height: 480px;
 	object-fit: contain;
-	/* ou cover à voir */
-
 }
 
 
@@ -300,7 +295,6 @@ input#submitLogin {
 }
 
 /* modal */
-
 
 .modalGallery {
 	position: fixed;
@@ -540,8 +534,8 @@ hr {
 
 #removePreview {
 position: absolute;
-font-size: 15px; /* Ajustez la taille de l'icône si nécessaire */
-color: #000; /* Couleur de l'icône */
+font-size: 15px; 
+color: #000; 
 cursor: pointer;
 top: 15px;
 right: -35px;
@@ -552,14 +546,3 @@ right: -35px;
 	display: inline-block;
 }
 
-/* #errorMessage {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 10px;
-	min-height: 20px;
-	background-color: red;
-	color: white;
-	margin-bottom: 5px;
-	display: none;
-} */

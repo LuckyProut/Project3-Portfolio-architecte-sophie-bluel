@@ -1,7 +1,6 @@
 // récupération des travaux
 async function getWorks(filter) {
     document.querySelector(".gallery").innerHTML = "";
-    // sans ça chaque appel à getworks va ajouter de nouvelles images à celle déjà présente et non réinitialiser
     const url = "http://localhost:5678/api/works/"
     try {
         const response = await fetch(url);
@@ -10,19 +9,16 @@ async function getWorks(filter) {
         }
         const json = await response.json();
         if(filter) {
-            // on défini un filtrer en fonction de la catégorie de l'id des oeuvres
-            // puis si filter est défini on vient afficher les éléments de la categoryId
             const filtered = json.filter((data) => data.categoryId === filter);
             if (filtered.length === 0) {
-                showNoWorksMessage(); // Affiche le message s'il n'y a pas de travaux pour le filtre donné
+                showNoWorksMessage(); 
             } else {
-                hideNoWorksMessage(); // Cache le message s'il y a des travaux
+                hideNoWorksMessage(); 
                 for (let i = 0; i < filtered.length; i++) {
                     setGallery(filtered[i]);
                 }
             }
         } else {
-            // si aucun filtre appliqué (fonction getworks défini sur 0 plus bas) alors on affiche tout
             if (json.length === 0) {
                 showNoWorksMessage();
             } else {
@@ -40,6 +36,11 @@ async function getWorks(filter) {
         console.error(error.message);
     }
 }
+
+//charger les oeuvres au lancement de la page
+document.addEventListener("DOMContentLoaded", () => {
+    getWorks(); 
+});
 
 // Fonction pour afficher un message lorsqu'aucun travail n'est trouvé
 function showNoWorksMessage() {
@@ -59,11 +60,6 @@ function hideNoWorksMessage() {
         message.remove();
     }
 }
-
-//charger les oeuvres au lancement de la page
-document.addEventListener("DOMContentLoaded", () => {
-    getWorks(); 
-});
 
 // Création de la gallerie
 function setGallery(data) {
@@ -166,9 +162,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 //   Modal
-// au clique sur "modifier", ouvre la 1ere modale
 document.addEventListener('DOMContentLoaded', function() {
     
+    const stopPropagation = function (e) {
+        e.stopPropagation()
+    };
+
+    // au clique sur "modifier", ouvre la 1ere modale
     const openModal = function (e) {
         e.preventDefault();
         const target = document.querySelector(e.target.getAttribute('href'));
@@ -195,31 +195,28 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("galleryContent").style.display = "block";
         document.getElementById("addWorksContent").style.display = "none";
         document.getElementById('noPreview').style.display = 'block';
-        document.getElementById("previewImage").style.display = "none"; // Cache l'image
-        document.getElementById("previewImage").src = ""; // Réinitialise la source de l'image
-        document.getElementById("removePreview").style.display = "none"; // Cache l'icône de suppression
+        document.getElementById("previewImage").style.display = "none"; 
+        document.getElementById("previewImage").src = "";
+        document.getElementById("removePreview").style.display = "none"; 
         document.getElementById("textTitle").value = "";
     };
     
-
-    const stopPropagation = function (e) {
-        e.stopPropagation()
-    };
-
+    // Ouverture de la seconde modale
     const secondModal = document.querySelector('.addWorks');
     secondModal.addEventListener('click', function() {  
         document.getElementById("galleryContent").style.display = "none"; 
         document.getElementById("addWorksContent").style.display = "block"; 
     });
 
+    // Retour sur la 1ere modale depuis la 2nd
     const modalBack = document.querySelector('.modalBack');
-    modalBack.addEventListener('click', function() {  //au click sur "retour"
-        document.getElementById("galleryContent").style.display = "block"; //affiche le contenu de la première modale
-        document.getElementById("addWorksContent").style.display = "none"; //cache le contenu de la deuxieme modale
-        document.getElementById("previewImage").style.display = "none"; // Cache l'image
-        document.getElementById("previewImage").src = ""; // Réinitialise la source de l'image
-        document.getElementById("removePreview").style.display = "none"; // Cache l'icône de suppression
-        document.getElementById("noPreview").style.display = "block"; // Réaffiche le formulaire initial
+    modalBack.addEventListener('click', function() {  
+        document.getElementById("galleryContent").style.display = "block"; 
+        document.getElementById("addWorksContent").style.display = "none"; 
+        document.getElementById("previewImage").style.display = "none"; 
+        document.getElementById("previewImage").src = ""; 
+        document.getElementById("removePreview").style.display = "none"; 
+        document.getElementById("noPreview").style.display = "block"; 
     });
 
     document.querySelectorAll('.modify').forEach(a => {
@@ -269,7 +266,6 @@ async function deleteWorks(event) {
         document.getElementById(`trash${id}`).remove();
         document.getElementById(`figure${id}`).remove();
         document.getElementById(`figureModal${id}`).remove();
-        showNoWorksMessage();
       }
     }
 
@@ -307,27 +303,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 });
         
-// Envoie du form vers l'api
-document.addEventListener('DOMContentLoaded', (event) => {
-     document.getElementById('validateButton')?.addEventListener('click', submitForm);
-
-function colourButton() {
-    const textTitle = document.getElementById('textTitle').value.trim();
-    const categoriesList = document.getElementById('categoriesList').value;
-    const photo = document.getElementById('photo').files.length > 0;
-    
 // Changer la couleur du bouton en fonction des champs
-const validateButton = document.getElementById('validateButton');
-    if (textTitle && categoriesList && photo) {
-        validateButton.classList.add('active');
-    } else {
-        validateButton.classList.remove('active');
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('validateButton')?.addEventListener('click', submitForm);
+
+    function colourButton() {
+        const textTitle = document.getElementById('textTitle').value.trim();
+        const categoriesList = document.getElementById('categoriesList').value;
+        const photo = document.getElementById('photo').files.length > 0;
+    
+    const validateButton = document.getElementById('validateButton');
+        if (textTitle && categoriesList && photo) {
+            validateButton.classList.add('active');
+        } else {
+            validateButton.classList.remove('active');
+        }
     }
-}
     document.getElementById('textTitle').addEventListener('input', colourButton);
     document.getElementById('photo').addEventListener('change', colourButton);
 });
-        
+
+// Envoie du form vers l'api
 function submitForm() {
     const photoInput = document.getElementById('photo');
     const titleInput = document.getElementById('textTitle');

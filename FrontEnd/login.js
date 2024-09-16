@@ -2,7 +2,6 @@ const loginApi = "http://localhost:5678/api/users/login";
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("formLogin").addEventListener("submit", submitLoginForm);
-    // on doit écouter l'input "submit" et pas la class "submitInput"?
 });
 
 async function submitLoginForm(event) {
