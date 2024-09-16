@@ -109,16 +109,16 @@ document.addEventListener("DOMContentLoaded", () => {
 let boutonActif = null
 function Filter(data) {
     const div = document.createElement("div");
-    div.className = `button${data.id}`;
+    div.className = `button${data.id} buttonActive buttonUnactive`;
     div.innerHTML = `${data.name}`;
     document.querySelector(".divFilters").append(div);
     div.addEventListener("click",function() {
         if (boutonActif && boutonActif !== this) {
-            boutonActif.style.color = '#1D6154';
-            boutonActif.style.backgroundColor = 'transparent' 
+            boutonActif.classList.remove("buttonActive");
+            boutonActif.classList.add("buttonUnactive");
         }
-        this.style.color = 'white';
-        this.style.backgroundColor = '#1D6154';
+        this.classList.remove("buttonUnactive");
+        this.classList.add("buttonActive");
         boutonActif = this;
         getWorks(data.id);   
     });
@@ -127,17 +127,17 @@ function Filter(data) {
 document.addEventListener("DOMContentLoaded", function() {
     const button0 = document.querySelector(".button0");
 
-    button0.style.color = 'white';
-    button0.style.backgroundColor = '#1D6154';
+    button0.classList.remove("buttonUnactive");
+    button0.classList.add("buttonActive");
     boutonActif = button0;
     
     button0.addEventListener("click",function() {
         if (boutonActif && boutonActif !== this) {
-            boutonActif.style.color = '#1D6154';
-            boutonActif.style.backgroundColor = 'transparent' 
+            boutonActif.classList.remove("buttonActive");
+            boutonActif.classList.add("buttonUnactive");
         }
-        this.style.color = 'white';
-        this.style.backgroundColor = '#1D6154';
+        this.classList.remove("buttonUnactive");
+        this.classList.add("buttonActive");
         boutonActif = this;
         getWorks(0);
     });

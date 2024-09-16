@@ -225,7 +225,15 @@ footer nav ul {
 	background-color: #1D6154;
 }
 
+.buttonActive {
+	color: white;
+    background-color: #1D6154;
+}
 
+.buttonUnactive {
+	color: #1D6154;
+    background-color: transparent;
+}
 
 /* Login */
 
